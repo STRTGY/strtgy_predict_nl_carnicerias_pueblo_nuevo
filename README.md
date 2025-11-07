@@ -21,14 +21,15 @@ Visualización interactiva de análisis geoestadístico para la evaluación de v
 
 - **Selector de Métrica**: Cambia la variable de visualización en coropleta
   - Score Final (ponderación de 4 componentes)
+  - Nivel NSE (AMAI) - Colores oficiales AMAI
   - Densidad Poblacional 2025
-  - Índice NSE 2025
+  - Población Total 2025
 
 - **Filtro por Score**: Slider para filtrar AGEBs por score mínimo
 
-- **Toggles de Capas**: Activar/desactivar visibilidad de cada capa
+- **Toggles de Capas**: Activar/desactivar visibilidad de cada capa (8 capas disponibles)
 
-- **Popups**: Información detallada al hacer clic en elementos
+- **Popups**: Información detallada al hacer clic en elementos del mapa
 
 ### Popups de Información
 
@@ -49,7 +50,8 @@ Visualización interactiva de análisis geoestadístico para la evaluación de v
 
 - **MapLibre GL JS v3.6.2** - Motor de mapas (sin token requerido)
 - **OpenStreetMap** - Tiles de mapa base
-- **Vanilla JavaScript** - Lógica de aplicación
+- **Google Maps Traffic API** - Tráfico en tiempo real
+- **Vanilla JavaScript** - Lógica de aplicación (ES6+)
 - **CSS3** - Estilos y diseño responsivo
 
 ## Estructura de Archivos
@@ -59,7 +61,8 @@ reports/strtgy_predict_nl_carnicerias/
 ├── index.html              # Página principal
 ├── assets/
 │   ├── style.css          # Estilos globales
-│   └── map.js             # Lógica del mapa y controles
+│   ├── map.js             # Lógica del mapa y controles
+│   └── strtgy_white.png   # Logo STRTGY
 └── data/
     ├── 01_Colonias_AreaObjetivo.geojson
     ├── 02_AGEB_PuebloNuevo_Potencial.geojson
@@ -128,33 +131,41 @@ Cuando se selecciona "Nivel NSE (AMAI)", se utilizan los colores oficiales de la
 
 ### Métricas Numéricas (Quintiles)
 
-Para Score Final, Densidad Poblacional e Índice NSE, los colores representan quintiles:
+Para Score Final, Densidad Poblacional y Población Total, los colores representan quintiles:
 
-- **#fee5d9** - Quintil 1 (0-20%)
+- **#fee5d9** - Quintil 1 (0-20%) - Valor más bajo
 - **#fcae91** - Quintil 2 (20-40%)
 - **#fb6a4a** - Quintil 3 (40-60%)
 - **#de2d26** - Quintil 4 (60-80%)
-- **#a50f15** - Quintil 5 (80-100%)
+- **#a50f15** - Quintil 5 (80-100%) - Valor más alto
 
-## Metodología
+## Score Final - Metodología
 
-El análisis completo y la metodología están documentados en:
-- [IMPLICACIONES_PUEBLO_NUEVO.md](data/IMPLICACIONES_PUEBLO_NUEVO.md)
+El Score Final es un índice compuesto que evalúa la aptitud de cada AGEB para la instalación de una carnicería.
 
-### Score Final
+### Componentes Ponderados
 
-Componentes ponderados:
-- **35%** Nivel Socioeconómico (NSE)
-- **25%** Competencia
-- **20%** Accesibilidad
-- **20%** Flujo peatonal/vehicular
+- **35%** Nivel Socioeconómico (NSE) - Poder adquisitivo del área
+- **25%** Competencia - Saturación de carnicerías existentes
+- **20%** Accesibilidad - Conectividad vial y transporte
+- **20%** Flujo peatonal/vehicular - Tráfico potencial de clientes
+
+### Interpretación
+
+- **80-100**: Excelente - Alta prioridad para apertura
+- **70-79**: Bueno - Potencial alto con algunas consideraciones
+- **60-69**: Moderado - Requiere análisis detallado
+- **<60**: Bajo - No recomendado
+
+Documentación completa: [IMPLICACIONES_PUEBLO_NUEVO.md](data/IMPLICACIONES_PUEBLO_NUEVO.md)
 
 ## Rendimiento
 
-- Carga de ~2.5 MB de datos GeoJSON
+- Carga de ~2.5 MB de datos GeoJSON (8 archivos)
 - Rendering fluido hasta zoom 18
 - Hover y popups optimizados con `generateId`
-- Sin dependencia de tokens o APIs externas
+- Sin tokens de MapLibre/Mapbox requeridos
+- Tráfico en tiempo real opcional (Google Maps)
 
 ## Compatibilidad
 
@@ -163,11 +174,49 @@ Componentes ponderados:
 - Safari 14+
 - Móviles: iOS Safari 14+, Chrome Android 90+
 
+## Características Destacadas
+
+### ✨ Sin Tokens Requeridos
+- MapLibre GL JS (open source)
+- No requiere API keys de Mapbox
+
+### 🎨 Colores NSE Oficiales AMAI
+- Implementación de paleta estándar mexicana
+- Niveles: A/B, C+, C, C-, D+, D, E
+
+### 🚦 Tráfico en Tiempo Real
+- Integración con Google Maps Traffic
+- Visualización de congestión vehicular
+
+### 📊 Análisis Multivariable
+- 4 métricas de visualización
+- Filtros dinámicos por score
+- Leyenda que actualiza automáticamente
+
+### 🗺️ Capas Contextuales
+- Competencia categorizada por tipo
+- POIs estratégicos (plazas, escuelas, tiendas)
+- Límites administrativos
+
+## Próximos Pasos
+
+### Para Publicar
+1. Verifica que todos los archivos GeoJSON estén en `data/`
+2. Prueba localmente con `python -m http.server 8000`
+3. Sube a GitHub y habilita GitHub Pages
+4. Accede a tu URL de GitHub Pages
+
+### Para Personalizar
+- Cambia colores en `assets/style.css` (variables CSS)
+- Ajusta métricas en `assets/map.js`
+- Modifica popups para mostrar información adicional
+
 ## Soporte
 
-**STRTGY** - Consultoría estratégica e inteligencia artificial aplicada
+**STRTGY** - Inteligencia Geoestadística Aplicada  
+Consultoría estratégica e inteligencia artificial
 
-Documentación completa del proyecto en el repositorio principal.
+Documentación técnica adicional en el repositorio principal.
 
 ---
 
