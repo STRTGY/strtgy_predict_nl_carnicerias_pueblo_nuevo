@@ -1,0 +1,343 @@
+/* STRTGY Brand Variables */
+:root {
+    --strtgy-primary: #1a1a1a;
+    --strtgy-secondary: #2d3748;
+    --strtgy-accent: #3182ce;
+    --strtgy-border: #e2e8f0;
+    --strtgy-bg: #f7fafc;
+    --strtgy-text: #2d3748;
+    --strtgy-text-light: #718096;
+    --strtgy-shadow: rgba(0, 0, 0, 0.1);
+    
+    /* Map colors */
+    --color-high: #a50f15;
+    --color-med-high: #de2d26;
+    --color-med: #fb6a4a;
+    --color-med-low: #fcae91;
+    --color-low: #fee5d9;
+}
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--strtgy-text);
+    background-color: var(--strtgy-bg);
+    overflow: hidden;
+}
+
+/* Header */
+.header {
+    background-color: var(--strtgy-primary);
+    color: white;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 4px var(--strtgy-shadow);
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.brand-logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Main container */
+.main-container {
+    display: flex;
+    height: calc(100vh - 120px);
+    position: relative;
+}
+
+/* Control Panel */
+.control-panel {
+    width: 320px;
+    background-color: white;
+    border-right: 1px solid var(--strtgy-border);
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 2px 0 8px var(--strtgy-shadow);
+}
+
+.panel-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.panel-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--strtgy-text-light);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--strtgy-border);
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--strtgy-text);
+}
+
+.select-input {
+    padding: 0.5rem;
+    border: 1px solid var(--strtgy-border);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.select-input:hover,
+.select-input:focus {
+    border-color: var(--strtgy-accent);
+    outline: none;
+}
+
+.slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--strtgy-border);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--strtgy-accent);
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--strtgy-accent);
+    cursor: pointer;
+    border: none;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.875rem;
+}
+
+.checkbox-label:hover {
+    background-color: var(--strtgy-bg);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--strtgy-accent);
+}
+
+/* Legend */
+.legend-container {
+    margin-top: auto;
+}
+
+#legend-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.legend-color {
+    width: 24px;
+    height: 16px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.legend-label {
+    color: var(--strtgy-text);
+}
+
+/* Map */
+.map-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+}
+
+/* Loading overlay */
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 999;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.loading.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--strtgy-border);
+    border-top-color: var(--strtgy-accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading p {
+    font-size: 0.875rem;
+    color: var(--strtgy-text-light);
+}
+
+/* MapLibre popup customization */
+.maplibregl-popup-content {
+    padding: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px var(--strtgy-shadow);
+    min-width: 240px;
+}
+
+.popup-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--strtgy-primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--strtgy-border);
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.popup-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8125rem;
+}
+
+.popup-row-label {
+    color: var(--strtgy-text-light);
+    font-weight: 500;
+}
+
+.popup-row-value {
+    color: var(--strtgy-text);
+    font-weight: 600;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--strtgy-primary);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.75rem 1.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.footer a {
+    color: white;
+    text-decoration: underline;
+    transition: opacity 0.2s;
+}
+
+.footer a:hover {
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .control-panel {
+        width: 100%;
+        max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid var(--strtgy-border);
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+}
+

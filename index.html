@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRTGY | Análisis Geoestadístico - Pueblo Nuevo, NL</title>
+    
+    <!-- MapLibre GL JS -->
+    <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet">
+    <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+    
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <img src="assets/strtgy_white.png" alt="STRTGY" class="brand-logo">
+            <div class="header-info">
+                <h2 class="title">Análisis de Potencial - Carnicerías Pueblo Nuevo</h2>
+                <p class="subtitle">Apodaca, Nuevo León</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Control Panel -->
+        <aside class="control-panel">
+            <div class="panel-section">
+                <h3 class="panel-title">Visualización</h3>
+                
+                <div class="control-group">
+                    <label class="control-label">Variable de análisis</label>
+                    <select id="metric-selector" class="select-input">
+                        <option value="Score_Final">Score Final</option>
+                        <option value="Nivel_NSE">Nivel NSE (AMAI)</option>
+                        <option value="Densidad_Pobl_2025">Densidad Poblacional 2025</option>
+                        <option value="Poblacion_Total_2025">Población Total 2025</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">
+                        Filtro Score Mínimo: <span id="score-value">0</span>
+                    </label>
+                    <input type="range" id="score-filter" class="slider" min="0" max="100" value="0" step="5">
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="panel-title">Capas</h3>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="layer-top" checked>
+                    <span>Top Ubicaciones</span>
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="layer-carnicerias" checked>
+                    <span>Carnicerías Existentes</span>
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="layer-plazas" checked>
+                    <span>Plazas Comerciales</span>
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="layer-escuelas">
+                    <span>Escuelas</span>
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="layer-tiendas">
+                    <span>Tiendas Departamentales</span>
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="layer-colonias" checked>
+                    <span>Límites Colonias</span>
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" id="layer-trafico">
+                    <span>Tráfico en Tiempo Real (Google)</span>
+                </label>
+            </div>
+
+            <div class="panel-section legend-container" id="legend">
+                <h3 class="panel-title">Leyenda</h3>
+                <div id="legend-content"></div>
+            </div>
+        </aside>
+
+        <!-- Map Container -->
+        <main class="map-wrapper">
+            <div id="map" class="map"></div>
+            <div id="loading" class="loading">
+                <div class="loading-spinner"></div>
+                <p>Cargando datos geoestadísticos...</p>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>
+            © 2025 STRTGY | Inteligencia Geoestadística | 
+            Mapas base: © OpenStreetMap contributors | Tráfico: © Google Maps
+        </p>
+    </footer>
+
+    <!-- Main application script -->
+    <script src="assets/map.js"></script>
+</body>
+</html>
+

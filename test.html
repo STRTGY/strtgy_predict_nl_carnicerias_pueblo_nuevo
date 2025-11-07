@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Data Loading</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        h1 { color: #1a1a1a; }
+        .test-item {
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+        }
+        .success { background-color: #d1fae5; border-color: #10b981; }
+        .error { background-color: #fee2e2; border-color: #ef4444; }
+        .pending { background-color: #fef3c7; border-color: #f59e0b; }
+        pre {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 STRTGY Map - Data Loading Test</h1>
+    <p>Verificando disponibilidad de archivos GeoJSON...</p>
+    
+    <div id="results"></div>
+    
+    <script>
+        const files = [
+            '01_Colonias_AreaObjetivo.geojson',
+            '02_AGEB_PuebloNuevo_Potencial.geojson',
+            '03_TopUbicaciones_AGEB_PuebloNuevo.geojson',
+            '04_Carnicerias_Existentes_PuebloNuevo.geojson',
+            '05_POI_Plazas_PuebloNuevo.geojson',
+            '06_POI_Escuelas_PuebloNuevo.geojson',
+            '07_POI_TiendasDepto_PuebloNuevo.geojson',
+            '08_Accesibilidad_RedVial_PuebloNuevo.geojson',
+            '09_Demografia_PuebloNuevo.geojson'
+        ];
+        
+        const results = document.getElementById('results');
+        
+        async function testFile(filename) {
+            const div = document.createElement('div');
+            div.className = 'test-item pending';
+            div.innerHTML = `<strong>${filename}</strong><br>Cargando...`;
+            results.appendChild(div);
+            
+            try {
+                const start = performance.now();
+                const response = await fetch(`./data/${filename}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const duration = (performance.now() - start).toFixed(0);
+                const size = (response.headers.get('content-length') / 1024).toFixed(1);
+                
+                div.className = 'test-item success';
+                div.innerHTML = `
+                    <strong>✓ ${filename}</strong><br>
+                    Features: ${data.features?.length || 0} | 
+                    Tiempo: ${duration}ms | 
+                    Tamaño: ~${size || '?'} KB<br>
+                    <details>
+                        <summary>Ver primera feature</summary>
+                        <pre>${JSON.stringify(data.features[0], null, 2).substring(0, 500)}...</pre>
+                    </details>
+                `;
+            } catch (error) {
+                div.className = 'test-item error';
+                div.innerHTML = `
+                    <strong>✗ ${filename}</strong><br>
+                    Error: ${error.message}
+                `;
+            }
+        }
+        
+        async function runTests() {
+            for (const file of files) {
+                await testFile(file);
+            }
+            
+            const successCount = document.querySelectorAll('.success').length;
+            const errorCount = document.querySelectorAll('.error').length;
+            
+            const summary = document.createElement('div');
+            summary.className = successCount === files.length ? 'test-item success' : 'test-item error';
+            summary.innerHTML = `
+                <h2>Resumen</h2>
+                <p>✓ Exitosos: ${successCount} / ${files.length}</p>
+                <p>✗ Errores: ${errorCount}</p>
+                ${successCount === files.length ? 
+                    '<p><strong>¡Todos los archivos se cargaron correctamente!</strong> El mapa debería funcionar sin problemas.</p>' :
+                    '<p><strong>Hay archivos faltantes o con errores.</strong> Verifica que los archivos GeoJSON estén en la carpeta data/.</p>'
+                }
+            `;
+            results.insertBefore(summary, results.firstChild);
+        }
+        
+        runTests();
+    </script>
+</body>
+</html>
+
